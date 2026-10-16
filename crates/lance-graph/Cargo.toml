@@ -15,7 +15,7 @@ arrow = { version = "58", features = ["prettyprint"] }
 arrow-array = "58"
 arrow-schema = "58"
 async-trait = "0.1"
-datafusion = { version = "53.1", default-features = false, features = [
+datafusion = { version = "54", default-features = false, features = [
     "nested_expressions",
     "regex_expressions",
     "unicode_expressions",
@@ -25,15 +25,15 @@ datafusion = { version = "53.1", default-features = false, features = [
     "string_expressions",
     "parquet",
 ] }
-datafusion-common = "53.1"
-datafusion-expr = "53.1"
-datafusion-sql = "53.1"
-datafusion-functions-aggregate = "53.1"
+datafusion-common = "54"
+datafusion-expr = "54"
+datafusion-sql = "54"
+datafusion-functions-aggregate = "54"
 futures = "0.3"
 lance-graph-catalog = { path = "../lance-graph-catalog", version = "0.5.4" }
-lance = "8.0.0"
-lance-linalg = "8.0.0"
-lance-namespace = "8.0.0"
+lance = "13"
+lance-linalg = "13"
+lance-namespace = "13"
 nom = "7.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -45,6 +45,6 @@ unity-catalog = ["lance-graph-catalog/unity-catalog"]
 
 [dev-dependencies]
 futures = "0.3"
-lance-arrow = "8.0.0"
+lance-arrow = "13"
 tempfile = "3"
 tokio = { version = "1.37", features = ["macros", "rt-multi-thread"] }

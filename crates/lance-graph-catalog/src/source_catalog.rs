@@ -3,7 +3,6 @@
 
 //! Context-free source catalog for DataFusion logical planning.
 
-use std::any::Any;
 use std::collections::HashMap;
 use std::sync::Arc;
 
@@ -92,9 +91,9 @@ impl SimpleTableSource {
 }
 
 impl TableSource for SimpleTableSource {
-    fn as_any(&self) -> &dyn Any {
-        self
-    }
+    // datafusion 54 changed TableSource to require `Any + Sync + Send`
+    // supertraits, so as_any() is provided by Any itself; do not reimplement
+    // it or the compiler complains that the method is not a trait member.
     fn schema(&self) -> SchemaRef {
         self.schema.clone()
     }
