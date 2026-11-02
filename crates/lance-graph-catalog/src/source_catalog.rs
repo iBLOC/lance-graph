@@ -3,7 +3,6 @@
 
 //! Context-free source catalog for DataFusion logical planning.
 
-use std::any::Any;
 use std::collections::HashMap;
 use std::sync::Arc;
 
@@ -92,9 +91,8 @@ impl SimpleTableSource {
 }
 
 impl TableSource for SimpleTableSource {
-    fn as_any(&self) -> &dyn Any {
-        self
-    }
+    // ⚠️ datafusion 54 dropped `TableSource::as_any` => ⇒ the impl that
+    // provided it is gone too (it was only there to satisfy that method).
     fn schema(&self) -> SchemaRef {
         self.schema.clone()
     }

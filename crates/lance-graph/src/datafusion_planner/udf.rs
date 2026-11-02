@@ -356,10 +356,8 @@ impl std::fmt::Debug for VectorDistanceUDF {
 }
 
 impl datafusion::logical_expr::ScalarUDFImpl for VectorDistanceUDF {
-    fn as_any(&self) -> &dyn std::any::Any {
-        self
-    }
-
+    // ⚠️ datafusion 54 dropped `ScalarUDFImpl::as_any` => ⇒ the impl that
+    // provided it is gone too (it was only there to satisfy that method).
     fn name(&self) -> &str {
         &self.name
     }
@@ -413,10 +411,7 @@ impl std::fmt::Debug for VectorSimilarityUDF {
 }
 
 impl datafusion::logical_expr::ScalarUDFImpl for VectorSimilarityUDF {
-    fn as_any(&self) -> &dyn std::any::Any {
-        self
-    }
-
+    // ⚠️ datafusion 54 dropped `ScalarUDFImpl::as_any` (same as above).
     fn name(&self) -> &str {
         &self.name
     }
