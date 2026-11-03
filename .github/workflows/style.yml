@@ -17,6 +17,9 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-C debuginfo=1"
+  # fmt/clippy 的 lint 集合跟工具链版本走 ⇒ 这一格显式留在 stable，
+  # 否则仓根 rust-toolchain.toml（1.94 地板）会悄悄换掉 lint 基准。
+  RUSTUP_TOOLCHAIN: stable
 
 jobs:
   format:

@@ -29,6 +29,8 @@ jobs:
       RUSTFLAGS: "-C debuginfo=1"
       RUST_BACKTRACE: "1"
       CARGO_INCREMENTAL: "0"
+      # 显式留在 stable（与加 toolchain 文件之前一致）；仓根那份钉的是 1.94 地板。
+      RUSTUP_TOOLCHAIN: stable
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

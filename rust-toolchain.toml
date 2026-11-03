@@ -1,0 +1,12 @@
+[toolchain]
+# MSRV 地板：lance 14 的 rust-version = 1.94.0 ⇒ 本 fork 的工具链钉在 1.94。
+# CI 里用 RUSTUP_TOOLCHAIN 显式选（见 .github/workflows/*），
+# 因为目录覆盖的优先级高于 `rustup default`，不显式说就会静默改掉工具链。
+#
+# 这份文件还有一个实际职责：`python/rust-toolchain.toml` 是一个**符号链接**
+# （git mode 120000，内容是 `../rust-toolchain.toml`）。在 Windows 检出
+# （core.symlinks=false）下它会被压成普通文件，rustup 于是把
+# `../rust-toolchain.toml` 当 TOML 解析并直接报错：
+#   error: could not parse override file: ... missing value for key, expected `=`
+# 有了本文件，那个链接才有目标。
+channel = "1.94"

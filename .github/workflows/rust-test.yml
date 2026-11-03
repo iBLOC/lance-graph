@@ -24,9 +24,15 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      # 显式选工具链 —— 仓根 rust-toolchain.toml 钉 1.94，目录覆盖会盖过
+      # `rustup default` ⇒ 矩阵若不显式声明，跑的就不是矩阵那一格。
+      RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
     strategy:
       matrix:
         toolchain:
+          # 1.94 = 地板（lance 14 的 rust-version = 1.94.0）；stable = 最新能跑。
+          - "1.94"
           - stable
     steps:
       - uses: actions/checkout@v4
@@ -56,6 +62,10 @@ jobs:
   test-with-coverage:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      # 覆盖率那格显式留在 stable（与加 toolchain 文件之前一致）——
+      # 仓根那份文件钉的是 1.94 地板。
+      RUSTUP_TOOLCHAIN: stable
     steps:
       - uses: actions/checkout@v4
       - name: Setup rust toolchain

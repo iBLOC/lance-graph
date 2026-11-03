@@ -19,6 +19,11 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-C debuginfo=1"
   CARGO_INCREMENTAL: "0"
+  # python 侧显式留在 stable（与加 toolchain 文件之前一致）。
+  # ⚠️ 这一段的 cwd 是 python/ —— 那里有一份指向仓根的符号链接
+  #    （git mode 120000），Windows 检出下会被压成普通文件 ⇒ rustup 直接报错。
+  #    仓根补上 rust-toolchain.toml 之后，那个链接才有目标。
+  RUSTUP_TOOLCHAIN: stable
 
 jobs:
   test:

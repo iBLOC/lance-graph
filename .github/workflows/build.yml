@@ -24,9 +24,17 @@ jobs:
   linux-build:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      # 显式选工具链。仓根 rust-toolchain.toml 钉的是 1.94（MSRV 地板），
+      # 目录覆盖会盖过 `rustup default` ⇒ 矩阵若不显式声明，跑的其实是 1.94
+      # 而不是矩阵那一格 —— 那就是「矩阵写着 stable、实际跑别的」。
+      RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
     strategy:
       matrix:
         toolchain:
+          # 1.94 = 地板（lance 14 的 rust-version = 1.94.0）；
+          # stable = 最新能跑。两格都要，别只留一格。
+          - "1.94"
           - stable
     steps:
       - uses: actions/checkout@v4

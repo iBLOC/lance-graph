@@ -24,6 +24,8 @@ env:
   RUST_BACKTRACE: "1"
   CARGO_INCREMENTAL: "0"
   CARGO_BUILD_JOBS: "1"
+  # 显式留在 stable（与加 toolchain 文件之前一致）；仓根那份钉的是 1.94 地板。
+  RUSTUP_TOOLCHAIN: stable
 
 jobs:
   publish:

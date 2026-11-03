@@ -30,6 +30,9 @@ on:
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    env:
+      # 显式留在 stable（与加 toolchain 文件之前一致）；仓根那份钉的是 1.94 地板。
+      RUSTUP_TOOLCHAIN: stable
     steps:
     - name: Output Inputs
       run: echo "${{ toJSON(github.event.inputs) }}"
