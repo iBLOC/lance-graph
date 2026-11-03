@@ -2,6 +2,9 @@
 name = "lance-graph"
 version = "0.5.4"
 edition = "2021"
+# lance 14 declares rust-version = 1.94 => ⇒ the graph layer must not claim
+# anything lower, or the manifest promises a toolchain that cannot build it.
+rust-version = "1.94"
 license = "Apache-2.0"
 authors = ["Lance Devs <dev@lancedb.com>"]
 repository = "https://github.com/lancedb/lance-graph"
