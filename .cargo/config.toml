@@ -1,0 +1,31 @@
+# MSRV-aware dependency resolution.
+#
+# This workspace pins its toolchain to 1.94 (see rust-toolchain.toml;
+# lance 14's rust-version floor is 1.94.0). Without this setting the
+# resolver picks the NEWEST semver-compatible versions even when they
+# require a newer rustc, and `cargo update` then produces a lockfile
+# this toolchain cannot build (2026-11-19: xet-runtime 1.8.1 pulled in
+# sysinfo 0.39.x which requires rustc 1.95).
+#
+# "fallback" makes the resolver prefer versions compatible with the
+# running rustc and only fall back to newer-incompatible ones when no
+# compatible version satisfies the requirement. MSRV-aware resolution
+# itself stabilized in Rust 1.84; this config key likewise.
+#
+# Note: this is a VIRTUAL workspace, so MSRV-aware resolution keys off
+# the rustc actually running (via rust-toolchain.toml), not a
+# workspace-level package.rust-version.
+#
+# ⚠️ 2026-11-19 empirical result: with "fallback", `cargo update` still
+# lands sysinfo 0.39.6 (rustc 1.95) — the opendal-service-hf → hf-xet →
+# xet-client → xet-runtime 1.8.x chain forces sysinfo ^0.39 and NO
+# 1.94-compatible version satisfies that chain, so the fallback has
+# nothing to fall back TO (cargo's "latest Rust 1.94 compatible" line
+# is misleading here; `cargo check` still fails the MSRV gate). This
+# config stays because it is the correct policy the moment upstream
+# publishes a 1.94-compatible link in that chain; until then the
+# lockfile must be kept at its hand-pinned state (xet 1.6.x/sysinfo
+# 0.38.4). Real fixes: upstream xet ships 1.94-compatible versions, or
+# the toolchain floor moves past 1.95 (a CI decision).
+[resolver]
+incompatible-rust-versions = "fallback"
